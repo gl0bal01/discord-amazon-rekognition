@@ -1,0 +1,55 @@
+{
+  "name": "discord-amazon-rekognition",
+  "version": "1.0.0",
+  "description": "A powerful Discord bot that integrates AWS Rekognition for advanced image analysis, face detection, text extraction, and face comparison",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "dev": "nodemon index.js",
+    "deploy": "node deploy-commands.js",
+    "deploy:global": "GUILD_ID= node deploy-commands.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "discord",
+    "bot",
+    "aws",
+    "rekognition",
+    "image-analysis",
+    "face-detection",
+    "ocr",
+    "text-extraction",
+    "celebrity-recognition",
+    "content-moderation",
+    "face-comparison",
+    "computer-vision",
+    "ai",
+    "machine-learning"
+  ],
+  "author": "gl0bal01",
+  "license": "MIT",
+  "dependencies": {
+    "discord.js": "^14.16.3",
+    "@aws-sdk/client-rekognition": "^3.667.0",
+    "axios": "^1.7.7",
+    "dotenv": "^16.4.5"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.7"
+  },
+  "engines": {
+    "node": ">=16.9.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/gl0bal01/discord-amazon-rekognition.git"
+  },
+  "bugs": {
+    "url": "https://github.com/gl0bal01/discord-amazon-rekognition/issues"
+  },
+  "homepage": "https://github.com/gl0bal01/discord-amazon-rekognition#readme",
+  "funding": {
+    "type": "github",
+    "url": "https://github.com/sponsors/gl0bal01"
+  }
+}
