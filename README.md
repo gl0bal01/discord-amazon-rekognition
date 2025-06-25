@@ -6,6 +6,7 @@
 [![Node.js Version](https://img.shields.io/badge/node-%3E%3D16.9.0-brightgreen.svg)](https://nodejs.org/)
 [![Discord.js](https://img.shields.io/badge/discord.js-v14.16.3-blue.svg)](https://discord.js.org/)
 [![AWS SDK](https://img.shields.io/badge/AWS_SDK-v3.667.0-orange.svg)](https://aws.amazon.com/sdk-for-javascript/)
+[![DOI](https://zenodo.org/badge/1005680658.svg)](https://doi.org/10.5281/zenodo.15722656)
 
 [![AWS Rekognition](https://img.shields.io/badge/AWS-Rekognition-FF9900?style=for-the-badge&logo=amazon-aws&logoColor=white)](https://aws.amazon.com/rekognition/)
 [![Computer Vision](https://img.shields.io/badge/AI-Computer_Vision-purple?style=for-the-badge)](https://aws.amazon.com/rekognition/)
