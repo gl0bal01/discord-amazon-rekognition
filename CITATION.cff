@@ -1,0 +1,23 @@
+cff-version: 1.2.0
+message: "If you use this software, please cite it using the metadata from this file."
+title: "Discord Amazon Rekognition"
+type: "software"
+abstract: >
+  A powerful Discord bot that leverages AWS Rekognition.
+keywords:
+  - "Discord bot"
+  - "AWS"
+  - "Rekognition"
+  - "Computer vision"
+authors:
+  - given-names: "Fabien"
+    family-names: "Grenier"
+    alias: "gl0bal01"
+    orcid: "https://orcid.org/0009-0003-0062-4876"
+repository-code: "https://github.com/gl0bal01/discord-amazon-rekognition"
+license: "MIT"
+version: "1.0.0"
+date-released: "2025-06-23"
+commit: "main"
+doi: "10.5281/zenodo.15722657"
+url: "https://github.com/gl0bal01/discord-amazon-rekognition"
