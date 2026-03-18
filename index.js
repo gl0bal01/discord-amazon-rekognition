@@ -85,7 +85,7 @@ client.on(Events.InteractionCreate, async interaction => {
     console.log(`📝 Executing command: ${interaction.commandName} by ${interaction.user.tag}`);
     await command.execute(interaction);
   } catch (error) {
-    console.error(`❌ Error executing command ${interaction.commandName}:`, error);
+    console.error(`❌ Error executing command ${interaction.commandName}:`, error.message || error);
     
     const errorResponse = {
       content: '⚠️ There was an error while executing this command! Please try again or contact support.',
