@@ -3,7 +3,7 @@
 <div align="center">
 
 [![MIT License](https://img.shields.io/badge/License-MIT-green.svg)](https://choosealicense.com/licenses/mit/)
-[![Node.js Version](https://img.shields.io/badge/node-%3E%3D16.9.0-brightgreen.svg)](https://nodejs.org/)
+[![Node.js Version](https://img.shields.io/badge/node-%3E%3D18.0.0-brightgreen.svg)](https://nodejs.org/)
 [![Discord.js](https://img.shields.io/badge/discord.js-v14.16.3-blue.svg)](https://discord.js.org/)
 [![AWS SDK](https://img.shields.io/badge/AWS_SDK-v3.667.0-orange.svg)](https://aws.amazon.com/sdk-for-javascript/)
 [![DOI](https://zenodo.org/badge/1005680658.svg)](https://doi.org/10.5281/zenodo.15722656)
@@ -133,7 +133,8 @@ Compare faces between two images with similarity scoring.
 
 ## 📋 Prerequisites
 
-- **Node.js** v16.9.0 or higher
+- **Node.js** v18.0.0 or higher (or **Bun** v1.0+)
+- **Docker** (optional, recommended for production)
 - **Discord Application** and bot token
 - **AWS Account** with Rekognition access
 - **AWS IAM User** with appropriate permissions
@@ -148,7 +149,7 @@ cd discord-amazon-rekognition
 
 ### 2. Install Dependencies
 ```bash
-npm install
+bun install
 ```
 
 ### 3. Set Up Environment Variables
@@ -236,22 +237,41 @@ Your bot needs these permissions:
 ### 1. Deploy Commands
 ```bash
 # Development (instant deployment to test server)
-npm run deploy
+bun run deploy
 
 # Production (global deployment - takes up to 1 hour)
-npm run deploy:global
+bun run deploy:global
 ```
 
 ### 2. Start the Bot
 ```bash
 # Production
-npm start
+bun run start
 
 # Development with auto-restart
-npm run dev
+bun run dev
 ```
 
-### 3. Verify Startup
+### 3. Docker (Recommended for Production)
+```bash
+# Build
+docker build -t rekognition-bot .
+
+# Run
+docker run -d \
+  --name rekognition-bot \
+  --read-only \
+  --tmpfs /app/temp:rw,noexec,nosuid,size=100m \
+  --memory=512m \
+  --cpus=1.0 \
+  --pids-limit=50 \
+  --security-opt=no-new-privileges:true \
+  --env-file .env \
+  --restart unless-stopped \
+  rekognition-bot
+```
+
+### 4. Verify Startup
 Look for these startup messages:
 ```
 ✅ Loaded command: rekognition
@@ -280,10 +300,14 @@ https://discord.com/api/oauth2/authorize?client_id=YOUR_CLIENT_ID&permissions=21
 discord-amazon-rekognition/
 ├── commands/
 │   └── rekognition.js     # Main Rekognition command
-├── temp/                  # Temporary file storage
+├── tests/
+│   └── rekognition.test.js # Unit tests (bun test)
+├── temp/                  # Temporary file storage (auto-created)
+├── .dockerignore         # Docker build exclusions
 ├── .env.example          # Environment variables template
 ├── .gitignore            # Git ignore rules
 ├── deploy-commands.js    # Command deployment script
+├── Dockerfile            # Multi-stage production container
 ├── index.js              # Main bot application
 ├── LICENSE               # MIT license
 ├── package.json          # Dependencies and scripts
@@ -338,7 +362,7 @@ discord-amazon-rekognition/
 | **Supported Formats** | JPEG, PNG |
 | **Max Image Size** | 5MB (JPEG), 8MB (PNG) |
 | **Accuracy Rate** | 95%+ for most features |
-| **Concurrent Users** | Unlimited |
+| **Concurrent Requests** | 10 (configurable) |
 | **Uptime** | 99.9% |
 
 
@@ -366,7 +390,7 @@ discord-amazon-rekognition/
 
 #### ❌ Commands not appearing
 **Solution:**
-- Run `npm run deploy` to update commands
+- Run `bun run deploy` to update commands
 - Check `CLIENT_ID` is correct in `.env`
 - Wait up to 1 hour for global command deployment
 
@@ -400,16 +424,24 @@ Monitor your usage at [AWS Billing Console](https://console.aws.amazon.com/billi
 
 ### Data Privacy
 - **No Image Storage**: Images are processed and immediately deleted
-- **Temporary Files**: Auto-cleanup after 60 seconds
+- **Temporary Files**: Auto-cleanup after 10 seconds per request
 - **AWS Security**: All data encrypted in transit and at rest
 - **No Logging**: Personal image data is never logged
 
+### Security Hardening
+- **SSRF Protection**: DNS resolution + private IP blocking (IPv4, IPv6, IPv4-mapped IPv6, 6to4, Teredo) with pinned HTTP agents to prevent DNS rebinding
+- **Path Traversal Prevention**: Random filenames with extension allowlisting
+- **Magic Bytes Validation**: File signatures verified (JPEG, PNG, GIF, BMP, WebP)
+- **Rate Limiting**: Per-user cooldown + global concurrency limit
+- **Error Sanitization**: Internal errors never exposed to users
+- **Docker**: Runs as non-root, read-only filesystem, tini init, pinned base image
+
 ### Best Practices
-- Store AWS credentials securely
-- Use IAM roles with minimal permissions
-- Regularly rotate access keys
+- Use IAM roles (preferred) or static credentials with minimal permissions
+- Deploy with Docker using the recommended `docker run` flags
+- Regularly rotate access keys if using static credentials
 - Monitor AWS CloudTrail logs
-- Keep dependencies updated
+- Keep dependencies updated (`bun update`)
 
 ### Content Moderation
 The bot includes automatic content moderation features to detect:
@@ -439,12 +471,11 @@ const response = await client.send(command);
 ```
 
 ### Testing
-Test with various image types:
-- Different resolutions
-- Various lighting conditions
-- Multiple faces
-- Text-heavy images
-- Different file formats
+```bash
+bun test
+```
+
+110 unit tests covering SSRF protection, magic bytes validation, URL validation, extension sanitization, and IPv6 edge cases.
 
 
 ## 🔗 Quick Links

@@ -13,6 +13,17 @@ const fs = require('node:fs');
 const path = require('node:path');
 require('dotenv').config();
 
+// Validate environment variables before loading commands
+if (!process.env.DISCORD_TOKEN) {
+  console.error('❌ DISCORD_TOKEN is required in environment variables!');
+  process.exit(1);
+}
+
+if (!process.env.CLIENT_ID) {
+  console.error('❌ CLIENT_ID is required in environment variables!');
+  process.exit(1);
+}
+
 const commands = [];
 
 // Load all command files from the commands directory
@@ -24,24 +35,13 @@ console.log('🔄 Loading commands for deployment...');
 for (const file of commandFiles) {
   const filePath = path.join(commandsPath, file);
   const command = require(filePath);
-  
+
   if ('data' in command && 'execute' in command) {
     commands.push(command.data.toJSON());
     console.log(`✅ Loaded command: ${command.data.name}`);
   } else {
     console.log(`⚠️  Command at ${filePath} is missing required "data" or "execute" property.`);
   }
-}
-
-// Validate environment variables
-if (!process.env.DISCORD_TOKEN) {
-  console.error('❌ DISCORD_TOKEN is required in environment variables!');
-  process.exit(1);
-}
-
-if (!process.env.CLIENT_ID) {
-  console.error('❌ CLIENT_ID is required in environment variables!');
-  process.exit(1);
 }
 
 // Initialize REST client

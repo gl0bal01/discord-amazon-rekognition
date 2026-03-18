@@ -11,16 +11,14 @@
 
 const fs = require('node:fs');
 const path = require('node:path');
-const { Client, Collection, Events, GatewayIntentBits } = require('discord.js');
+const { Client, Collection, Events, GatewayIntentBits, ActivityType } = require('discord.js');
 require('dotenv').config();
 
 // Create Discord client with necessary intents
 const client = new Client({ 
   intents: [
-    GatewayIntentBits.Guilds,
-    GatewayIntentBits.GuildMessages,
-    GatewayIntentBits.MessageContent
-  ] 
+    GatewayIntentBits.Guilds
+  ]
 });
 
 // Create commands collection
@@ -48,6 +46,15 @@ const tempDir = path.join(__dirname, 'temp');
 if (!fs.existsSync(tempDir)) {
   fs.mkdirSync(tempDir, { recursive: true });
   console.log('📁 Created temporary files directory');
+} else {
+  // Clean up orphaned temp files from previous runs
+  const orphanedFiles = fs.readdirSync(tempDir);
+  for (const file of orphanedFiles) {
+    try { fs.unlinkSync(path.join(tempDir, file)); } catch {}
+  }
+  if (orphanedFiles.length > 0) {
+    console.log(`🧹 Cleaned up ${orphanedFiles.length} orphaned temp file(s)`);
+  }
 }
 
 // Bot ready event
@@ -58,8 +65,8 @@ client.once(Events.ClientReady, readyClient => {
   console.log(`👥 Connected to ${readyClient.users.cache.size} users`);
   
   // Set bot activity status
-  client.user.setActivity('images with AWS Rekognition | /rekognition', { 
-    type: 'WATCHING' 
+  client.user.setActivity('images with AWS Rekognition | /rekognition', {
+    type: ActivityType.Watching
   });
 });
 
@@ -113,6 +120,7 @@ process.on('unhandledRejection', error => {
 
 process.on('uncaughtException', error => {
   console.error('❌ Uncaught exception:', error);
+  client.destroy();
   process.exit(1);
 });
 

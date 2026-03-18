@@ -8,7 +8,7 @@
     "dev": "nodemon index.js",
     "deploy": "node deploy-commands.js",
     "deploy:global": "GUILD_ID= node deploy-commands.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "bun test"
   },
   "keywords": [
     "discord",
@@ -32,13 +32,16 @@
     "discord.js": "^14.16.3",
     "@aws-sdk/client-rekognition": "^3.667.0",
     "axios": "^1.7.7",
-    "dotenv": "^16.4.5"
+    "dotenv": "^17.3.1"
   },
   "devDependencies": {
     "nodemon": "^3.1.7"
   },
+  "overrides": {
+    "undici": "^6.24.1"
+  },
   "engines": {
-    "node": ">=16.9.0"
+    "node": ">=18.0.0"
   },
   "repository": {
     "type": "git",
