@@ -16,9 +16,9 @@
 
 </div>
 
-A powerful Discord bot that leverages AWS Rekognition's advanced computer vision capabilities to provide comprehensive image analysis, face detection, text extraction, celebrity recognition, content moderation, and face comparison directly within Discord servers.
+A Discord bot that integrates with AWS Rekognition to provide image analysis, face detection, text extraction, celebrity recognition, content moderation, and face comparison directly within Discord servers.
 
-**Especially useful for organizations like Trace Labs and other OSINT communities, this bot streamlines image intelligence gathering and analysis, aiding in missing person investigations and real-time collaborative efforts.**
+**This bot can be used in OSINT workflows that involve image analysis, such as object identification, text extraction, and face comparison.**
 
 ## 📸 Preview
 
@@ -80,7 +80,7 @@ A powerful Discord bot that leverages AWS Rekognition's advanced computer vision
 
 ### 🎯 **Advanced Capabilities**
 - **Batch Processing**: Analyze multiple features simultaneously
-- **High Accuracy**: Powered by AWS's machine learning models
+- **AWS-Powered**: Uses AWS Rekognition's machine learning models
 - **Detailed Reports**: Export comprehensive JSON analysis reports
 - **Image Support**: Works with URLs and uploaded images (JPEG, PNG)
 - **Real-time Processing**: Fast analysis with progress indicators
@@ -358,12 +358,11 @@ discord-amazon-rekognition/
 
 | Metric | Value |
 |--------|-------|
-| **Analysis Speed** | 2-5 seconds per image |
+| **Analysis Speed** | Varies by image size, network latency, and AWS region |
 | **Supported Formats** | JPEG, PNG |
 | **Max Image Size** | 5MB (JPEG), 8MB (PNG) |
-| **Accuracy Rate** | 95%+ for most features |
+| **Accuracy** | Depends on feature and image quality; see [AWS Rekognition documentation](https://docs.aws.amazon.com/rekognition/latest/dg/limits.html) for details |
 | **Concurrent Requests** | 10 (configurable) |
-| **Uptime** | 99.9% |
 
 
 ## 🐛 Troubleshooting
@@ -510,7 +509,7 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ## 🙏 Acknowledgments
 
-- [AWS Rekognition](https://aws.amazon.com/rekognition/) - Powerful computer vision service
+- [AWS Rekognition](https://aws.amazon.com/rekognition/) - Cloud-based computer vision service
 - [Discord.js](https://discord.js.org/) - Excellent Discord API library
 - [Discord Developer Portal](https://discord.com/developers/) - Bot development platform
 - [AWS SDK for JavaScript](https://aws.amazon.com/sdk-for-javascript/) - Official AWS SDK
@@ -519,7 +518,7 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 <div align="center">
 
-**🎆 Made with ❤️ for the Osint community**
+**Made for image analysis workflows**
 
 [![GitHub](https://img.shields.io/badge/GitHub-gl0bal01-181717?style=for-the-badge&logo=github&logoColor=white)](https://github.com/gl0bal01)
 [![AWS](https://img.shields.io/badge/Powered_by-AWS_Rekognition-FF9900?style=for-the-badge&logo=amazon-aws&logoColor=white)](https://aws.amazon.com/rekognition/)
