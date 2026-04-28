@@ -1,6 +1,6 @@
 {
   "name": "discord-amazon-rekognition",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "A powerful Discord bot that integrates AWS Rekognition for advanced image analysis, face detection, text extraction, and face comparison",
   "main": "index.js",
   "scripts": {
